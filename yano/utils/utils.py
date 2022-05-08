@@ -1,0 +1,8 @@
+
+
+def goodbye():
+    print("Goodbye!")
+
+
+
+
