@@ -1,4 +1,4 @@
-
+from ..data.iterate import iterate
 
 class logic_obj(object):
     def evaluate(self,value):
@@ -86,6 +86,11 @@ class logic_obj(object):
     def __rmod__(self,other):
         assert type(other) is int or type(other) is float or type(other) is str or hasattr(other,"getvalue"), "Only numbers can be compared"
         return logic_condition(other,self,"modulo")
+
+    def __iter__(self):
+        return iterate(self)
+
+
 
 
 class logic_condition(logic_obj):
@@ -234,22 +239,6 @@ def filter_data(data,condition):
             yield x
 
 
-number_of_features = logic_variable("number_of_features")
-number_of_samples = logic_variable("number_of_samples")#test+train
-categorical = logic_variable("categorical")
-numerical = logic_variable("numerical")
-name = logic_variable("name")
-textual = logic_variable("textual")
-twodim = logic_variable("twodim")
-threedim = logic_variable("threedim")
-image_data = logic_variable("image_data")
-image_based = logic_variable("image_based")#no longer an image, but derived from an image
-linearly_separable = logic_variable("linearly_separable")
-easy_to_separate = logic_variable("easy_to_separate")#in tests most algorithms achieve auc>0.9
-hard_to_separate = logic_variable("hard_to_separate")#in tests no algorithm achieves auc>0.9
-number_anomalies = logic_variable("number_anomalies")
-fraction_anomalies = logic_variable("fraction_anomalies")#number_anomalies/number_of_samples
-quantconst = logic_variable("quantconst")#min options of feature over the numerical features. Only defined if twodim==True
-quantmedian = logic_variable("quantmedian")#median options of feature over the numerical features. Only defined if twodim==True
-quantisation = logic_variable("quantisation")#quantconst/numberof_samples<0.2
+
+
 

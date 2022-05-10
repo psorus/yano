@@ -2,9 +2,6 @@
 from .loaddata import allfiles, fileinfo
 from .dataset import dataset
 
-#from metalogic import filter_data
-
-
 def _iterate_all():
     for f in allfiles():
         yield f
@@ -24,7 +21,15 @@ def _iterate_condition(condition):
             if f in condition:
                 yield f
     else:
-        raise ValueError('if condition is not defined by metalogic, it must be callable, dict or iterable')
+        try:
+            b=bool(condition)
+        except:
+            raise ValueError('if condition is not defined by metalogic, it must be callable, dict or iterable')
+        if b:
+            for f in _iterate_all():
+                yield f
+
+
 
 def _iterate(condition=None):
     if condition is None:
