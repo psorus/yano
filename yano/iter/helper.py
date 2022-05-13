@@ -82,13 +82,13 @@ def crossvalidate(x,y,n_folds=5):
             x1m=x1#but keep the abnormal one
         elif len(test_n)<len(x1):#more abnormal data than normal one in the testing data.
             #folding so other abnormal samples are used sometime
-            border=int((i/self.n)*len(x1))
+            border=int((i/n_folds)*len(x1))
             a,b=x1[:border],x1[border:]
             x1m=np.concatenate((a,b),axis=0)
             x1m=x1m[:len(test_n)]
             #keep the testing one
         test=np.concatenate([test_n,x1m],axis=0)
-        test_y=np.array([0]*len(test_n)+[1]*len(x1))
+        test_y=np.array([0]*len(test_n)+[1]*len(x1m))
         return train,test,test_y
 
     trains,tests,test_ys=[],[],[]

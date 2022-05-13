@@ -1,4 +1,5 @@
 from .handler import adaptive
+from ..helper import lambify
 
 def dxy(iterable):
     """instead of yielding datasets, this iterator yields dataset, x, y"""
@@ -8,15 +9,20 @@ def nonconst(iterable):
     """instead of yielding datasets, this iterator yields datasets without constant features"""
     return adaptive(iterable,"nonconst")
 
-
+@lambify
 def split(iterable,*args,**kwargs):
     """handles train test split for each input. Thus returns d, train, test_x, test_y"""
     return adaptive(iterable,"split",*args,**kwargs)
 
-def shuffle(iterable):
+@lambify
+def shuffle(iterable,seed=None):
     """shuffles whatever you put into it."""
-    return adaptive(iterable,"shuffle")
+    if seed is not None:
+        return adaptive(iterable,"shuffle",seed=seed)
+    else:
+        return adaptive(iterable,"shuffle")
 
+@lambify
 def crossval(iterable, *args, **kwargs):
     """handles cross validation for each input. Thus returns d, train, test_x, test_y, but each n_folds times"""
     return adaptive(iterable,"crossval",*args,**kwargs)
@@ -28,6 +34,7 @@ def pipeline(iterable, *tasks):
         q=task(q)
     return q
 
+@lambify
 def normalize(iterable,method="zscore"):
     """normalizes the dataset"""
     return adaptive(iterable,"normalize_"+method)

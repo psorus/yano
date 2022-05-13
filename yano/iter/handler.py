@@ -47,14 +47,20 @@ class handler(object):
                 del ac["y"]
 
             if "shuffle" in self.mods:
+                try:
+                    seed=self.args["shuffle"]["kwargs"]["seed"]
+                    callab=lambda x,y=None: shuffle(x,y,seed=seed)
+                except KeyError:
+                    callab=shuffle
+                
                 if "split" in self.mods:
-                    ac["train"]=shuffle(ac["train"])
-                    ac["testx"],ac["testy"]=shuffle(ac["testx"],ac["testy"])
+                    ac["train"]=callab(ac["train"])
+                    ac["testx"],ac["testy"]=callab(ac["testx"],ac["testy"])
                 elif "crossval" in self.mods:
-                    ac["folds"]=((shuffle(x),*shuffle(tx,ty)) for x,tx,ty in ac["folds"])
+                    ac["folds"]=((callab(x),*callab(tx,ty)) for x,tx,ty in ac["folds"])
 
                 else:
-                    ac["x"],ac["y"]=shuffle(ac["x"],ac["y"])
+                    ac["x"],ac["y"]=shuffle(ac["x"],ac["y"],seed=self.args["shuffle"]["kwargs"]["seed"])
 
             if "normalize_zscore" in self.mods:
                 if "split" in self.mods:

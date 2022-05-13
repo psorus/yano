@@ -2,7 +2,7 @@ from sklearn.metrics import roc_auc_score
 from copy import copy
 
 from ..helper import seed_once
-from .stats import stats
+from ..stats import Stats
 
 
 def run_algo_sklearn(algo, train, seed=42):
@@ -49,7 +49,7 @@ def test_algo_n(algo, train, test, testy, *args, method="roc_auc", n=10, **kwarg
     scores=[]
     for i in range(n):
         scores.append(test_algo(algo, train, test, testy, *args, method=method, seed=i, **kwargs))
-    return stats(scores)
+    return Stats(scores)
 
 
 

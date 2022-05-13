@@ -1,6 +1,8 @@
 
 from .loaddata import allfiles, fileinfo
 from .dataset import dataset
+from ..meta import symbols
+
 
 def _iterate_all():
     for f in allfiles():
@@ -40,6 +42,12 @@ def _iterate(condition=None):
 def iterate(condition=None):
     for f in _iterate(condition):
         yield dataset(f)
+
+def load_dataset(nam):
+    condition=symbols.name==nam
+    for d in iterate(condition):
+        return d
+
 
 if __name__=="__main__":
     for f in iterate():

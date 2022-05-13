@@ -56,6 +56,9 @@ def loadages():
     else:
         return {}
 
+def force_update_dic():
+    download("dic.json")
+
 @lru_cache(maxsize=1)
 def loaddic():
     assertfile("dic.json",do_check_age=False)
@@ -86,7 +89,10 @@ def official_update(fn):
     dic=loaddic()
     fn=no_file_name(fn)
     assert fn in dic.keys(), f"{fn} untracked"
-    return dic[fn]["last"]
+    try:
+        return dic[fn]["last"]
+    except KeyError:
+        return 0
 
 def local_update(fn):
     ages=loadages()

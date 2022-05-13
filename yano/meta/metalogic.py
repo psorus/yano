@@ -90,6 +90,12 @@ class logic_obj(object):
     def __iter__(self):
         return iterate(self)
 
+    def count(self):
+        return len(list(iterate(self)))
+    
+    def __len__(self):
+        return self.count()
+
 
 
 
