@@ -15,7 +15,7 @@ import json
 
 from plt import *
 
-log=Logger({})
+log=Logger({}, addfeat=True)
 
 log.load("log.json")
 

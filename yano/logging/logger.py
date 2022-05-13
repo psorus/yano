@@ -10,7 +10,7 @@ from ..helper import adaptricallable
 
 class Logger(object):
 
-    def __init__(self, algos, algo_names=None, verbose=0):
+    def __init__(self, algos, algo_names=None, verbose=0, addfeat=False):
 
         assert type(algos) == dict or (not algo_names is None and type(algos)==list), "algos must be a list, or algo_names must be provided"
 
@@ -25,6 +25,7 @@ class Logger(object):
 
         self.datasets=[]
         self.results=[]
+        self.addfeat=addfeat
 
     def add_run(self,dataset, results):
         self.datasets.append(dataset)
@@ -92,7 +93,10 @@ class Logger(object):
 
 
 
-    def show(self):
+    def show(self, addfeat=None):
+        if addfeat is None:
+            addfeat=self.addfeat
+
         try:
             from tabulate import tabulate
         except ImportError:
@@ -107,11 +111,13 @@ class Logger(object):
             return adaptricallable(q, "mediumstr")()
 
         for d, r in zip(datasets, results):
-            rows.append([adaptricallable(d,"name")()] + [trafo_to_str(zw) for zw in r])
+            rows.append([adaptricallable(d,"name_and_feat" if addfeat else "name")()] + [trafo_to_str(zw) for zw in r])
         print(tabulate(rows, headers=headers))
 
 
-    def to_latex(self):
+    def to_latex(self, addfeat=None):
+        if addfeat is None:
+            addfeat=self.addfeat
         try:
             from tabulate import tabulate
         except ImportError:
@@ -125,7 +131,7 @@ class Logger(object):
             return adaptricallable(q, "mediumstr")()
 
         for d, r in zip(datasets, results):
-            rows.append([adaptricallable(d,"name")()] + [trafo_to_str(zw) for zw in r])
+            rows.append([adaptricallable(d,"name_and_feat" if addfeat else "name")()] + [trafo_to_str(zw) for zw in r])
             if type(r[0]) is str:
                 vals.append([negative_infinity() for _ in range(len(r)+1)])
  

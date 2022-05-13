@@ -22,6 +22,9 @@ class dataset(object):
     def name(s):
         return s.key
 
+    def name_and_feat(s):
+        return f"{s.name()}({s.info()['number_of_features']})"
+
     def load(s):
         s.x,s.y=loaddata(s.key)
         s.loaded=True
