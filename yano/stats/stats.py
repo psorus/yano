@@ -37,6 +37,9 @@ class Stats(object):
     def __ne__(self,other):
         return 1-(self==other)
 
+    def isnan(self):
+        return np.any(np.isnan(self.q))
+
     def shortstr(self):
         return str(round(np.mean(self.q),4))
 

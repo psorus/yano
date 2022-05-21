@@ -35,6 +35,12 @@ def adaptricallable(obj, attr, els=None):
     else:
         return lambda obj=obj: obj
 
-
+def nannable(func):
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except:
+            return np.nan
+    return wrapper
 
 

@@ -118,6 +118,11 @@ def normalize(x,sec=None,method="zscore"):
         return x,sec
     return x
 
+def asfloat(x):
+    return np.array(x).astype(np.float32)
+
+def asint(x):
+    return np.array(x).astype(np.int32)
 
 
 

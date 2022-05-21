@@ -49,10 +49,18 @@ def minmax(iterable):
     return normalize(iterable,"minmax")
 normalize_minmax=minmax
 
+def listfold(iterable):
+    return adaptive(iterable,"listfold")
 
+def asfloat(iterable):
+    return adaptive(iterable,"asfloat")
 
+def asint(iterable):
+    return adaptive(iterable,"asint")
 
-
+@lambify
+def cut(iterable, maxima=10):
+    return adaptive(iterable,"cut",maxima=maxima)
 
 
 

@@ -1,7 +1,7 @@
 import numpy as np
 
 import yano
-from yano.meta import *#logical_true as ltrue
+from yano.symbols import *#logical_true as ltrue
 from yano.iter import *
 from yano.utils import *
 
@@ -20,7 +20,17 @@ condition=condition & (number_of_samples>3000)
 
 #condition=~numerical
 
-pth="/home/psorus/use/"
+
+condition=~index
+condition=condition & (number_of_samples>200)
+condition=condition & (number_of_samples>2*number_of_features)
+condition=condition & (number_of_features>5)
+
+condition=condition & (name!="cifar0")
+
+print(len(condition))
+
+pth="/home/psorus/useB/"
 
 count=0
 for d,x,tx,ty in pipeline(condition, nonconst, shuffle, split):

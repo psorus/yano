@@ -1,7 +1,7 @@
 import numpy as np
 
 import yano
-from yano.meta import *#logical_true as ltrue
+from yano.symbols import *#logical_true as ltrue
 from yano.iter import *
 from yano.utils import *
 from yano.logging import Logger

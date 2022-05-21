@@ -27,7 +27,14 @@ class Logger(object):
         self.results=[]
         self.addfeat=addfeat
 
-    def add_run(self,dataset, results):
+    def add_run(self,dataset, results, verbose=None):
+        if verbose is None:
+            verbose = self.verbose
+        
+        if any([zw.isnan() for zw in results]):
+            if verbose>0:
+                print(f"Some results are NaN, skipping {dataset}")
+            return
         self.datasets.append(dataset)
         self.results.append(results)
 
@@ -56,7 +63,28 @@ class Logger(object):
             if verbose>1:
                 print(f"Results of {nam}: {results.shortstr()}")
             lis.append(results)
-        self.add_run(d, lis)
+        self.add_run(d, lis,verbose=verbose)
+
+    def run_cross(self, d, folds, verbose=None):
+        if verbose is None:
+            verbose = self.verbose
+        if verbose>0:
+            print("Running on dataset:", d)
+
+        lis=[]
+        for algo, nam in zip(self.algos, self.algo_names):
+            results=[]
+            for x,tx,ty in folds:
+                qual = test_algo(algo, x, tx, ty)
+                results.append(qual)
+            results=Stats(results)
+            if verbose>1:
+                print(f"Results of {nam}: {results.shortstr()}")
+            lis.append(results)
+        self.add_run(d, lis, verbose=verbose)
+
+
+
 
     def run_on_all(self, iterable, *args, **kwargs):
         for zw in iterable:

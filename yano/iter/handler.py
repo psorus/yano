@@ -1,4 +1,4 @@
-from .helper import remove_const_features, train_test_split, shuffle, crossvalidate, normalize
+from .helper import remove_const_features, train_test_split, shuffle, crossvalidate, normalize, asfloat, asint
 
 
 class handler(object):
@@ -15,9 +15,11 @@ class handler(object):
         if mod not in self.mods:
             self.mods.append(mod)
     def fixmods(self):
-        for zw in ["split","nonconst","split","crossval"]:
+        for zw in ["split","nonconst","split","crossval","normalize_zscore","normalize_minmax", "asfloat", "asint", "cut"]:
             if zw in self.mods:
                 self.assertmod("dxy")
+        if "listfold" in self.mods:
+            self.assertmod("crossval")
         assert not ("crossval" in self.mods and "split" in self.mods), "test-train split and cross-validation are not mutually exclusive"
 
     def yield_order(self, q):
@@ -29,10 +31,23 @@ class handler(object):
 
     def __iter__(self):
         self.fixmods()
-        for d in self.child:
+        for i,d in enumerate(self.child):
+            if "cut" in self.mods:
+                cut=self.args["cut"]["kwargs"]["maxima"]
+                if i>=cut:break
+
             ac={"d":d}
             if "dxy" in self.mods:
                 ac["x"],ac["y"]=ac["d"].getxy()
+
+            if "asint" in self.mods:
+                ac["x"]=asint(ac["x"])
+                ac["y"]=asint(ac["y"])
+
+            if "asfloat" in self.mods:
+                ac["x"]=asfloat(ac["x"])
+                ac["y"]=asfloat(ac["y"])
+
             if "nonconst" in self.mods:
                 ac["x"]=remove_const_features(ac["x"])
 

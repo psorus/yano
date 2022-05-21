@@ -1,2 +1,2 @@
 #any probability below this is significant
-significance=0.01
+significance=0.10

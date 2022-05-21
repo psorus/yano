@@ -1,7 +1,6 @@
 
 from .loaddata import allfiles, fileinfo
 from .dataset import dataset
-from ..meta import symbols
 
 
 def _iterate_all():
@@ -44,10 +43,11 @@ def iterate(condition=None):
         yield dataset(f)
 
 def load_dataset(nam):
-    condition=symbols.name==nam
-    for d in iterate(condition):
-        return d
-
+    #condition=symbols.name==nam
+    for d in iterate():
+        if d.name()==nam:
+            return d
+    return None
 
 if __name__=="__main__":
     for f in iterate():
