@@ -14,6 +14,7 @@ from pyod.models.knn import KNN
 
 import numpy as np
 
+n=3
 
 clf=IForest(n_estimators=100)
 #clf=KNN(n_neighbors=5)
@@ -24,7 +25,7 @@ for d,px,py in pipeline(name=="cardio", normalize("minmax")):break
 
 
 
-funcs=run_algo_n(clf,x, n=3)
+funcs=run_algo_n(clf,x, n=n)
 
 altitude=0.0
 inc=0.25
@@ -32,6 +33,12 @@ inc=0.25
 px0=np.array([xx for xx,yy in zip(px,py) if yy==0])
 
 altitude_plot(funcs, px0, px, py, altitude=0, inc=inc, hist=True)
+
+
+plt.savefig("imgs/show_repeat.png", format="png")
+plt.savefig("imgs/show_repeat.pdf", format="pdf")
+
+
 
 plt.how()
 

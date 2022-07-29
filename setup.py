@@ -4,7 +4,7 @@ from setuptools import find_packages
 setup(
   name = 'yano',         
   packages = find_packages(),
-  version = '0.9',      
+  version = '0.92',      
   license='apache-2.0',        
   description = 'Python module providing anomaly detection datasets and tools for evaluating algorithms',   
   author = 'Simon Klüttermann',                   
@@ -14,6 +14,7 @@ setup(
   keywords = ['DATA', 'ANOMALY DETECTION', 'OUTLIER DETECTION', 'ML'],   
   install_requires=[            
           'numpy',
+          'sklearn',
           'tqdm',
       ],
   classifiers=[

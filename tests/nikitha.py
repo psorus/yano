@@ -22,16 +22,22 @@ condition=condition & (number_of_samples>3000)
 
 
 condition=~index
-condition=condition & (number_of_samples>1000)
-condition=condition & (number_of_samples>200*number_of_features)
-condition=condition & (number_of_features<50)
-condition=condition & (numeric)
+condition=condition & (number_of_samples>2000)
+condition=condition & (number_of_samples>20*number_of_features)
+condition=condition & (number_of_features>10)
+condition=condition & (number_of_features<100)
 
 condition=condition & (name!="cifar0")
 
 print(len(condition))
 
-pth="/home/psorus/useldf/"
+for d in condition:
+    print(d)
+
+exit()
+
+
+pth="/home/psorus/useNikitha/"
 
 count=0
 for d,x,tx,ty in pipeline(condition, nonconst, shuffle, split):

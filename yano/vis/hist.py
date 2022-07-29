@@ -4,13 +4,13 @@ import numpy as np
 
 
 
-def hist(x,y, log=False, bins=0.1, modus="stack"):
+def hist(x,y, log=False, bins=0.1, modus="alpha"):
     """
     Plots a histogram of the anomaly scores x, where y is the ground truth
     log=False: if True, the y-axis is logarithmic
     bins=0.1: the number of bins. Also understands relative values to the length of x
     normed: if True, the histogram is normalized
-    modus: if "alpha", the alpha channel is used for there to be two plots. if "next" there will be a peak next to a peak. If "stack" then the diagrams will be stacked
+    modus: if "alpha", the alpha channel is used for there to be two plots. if "next" there will be a peak next to a peak. If "stack" then the diagrams will be stacked. stack and next currently require same size of normals as of abnormals
     """
 
     mn=np.min(x)

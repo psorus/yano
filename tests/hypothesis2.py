@@ -23,12 +23,12 @@ condition=condition & (number_of_features>50)
 condition=condition & (number_of_features<500)
 condition=condition & (number_of_samples<10000)
 condition=condition & name
-condition=condition & (numeric & nominal)
+#condition=condition & (numeric & nominal)
 
 
 print(len(condition), "Datasets found")#How many datasets are left?
 
-
+exit()
 
 #define hypothesis
 clf1=IForest(n_estimators=100)

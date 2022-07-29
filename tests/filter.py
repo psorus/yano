@@ -12,9 +12,12 @@ from pyod.models.knn import KNN
 import json
 
 
-condition=numeric & (~ nominal) & (~ textual) & (~ categorical)
+#condition=numeric & (~ nominal) & (~ textual) & (~ categorical)
 
-condition=condition & (number_of_samples>3000)
+#condition=condition & (number_of_samples>3000)
+
+condition=(numeric==1) & nominal
+
 
 #condition=logical_true
 

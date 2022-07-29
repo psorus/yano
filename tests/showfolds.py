@@ -14,11 +14,12 @@ from pyod.models.knn import KNN
 
 import numpy as np
 
+n=3
 
 clf=IForest(n_estimators=100)
 #clf=KNN(n_neighbors=5)
 
-for d,folds in pipeline(name=="cardio", shuffle, normalize("minmax"), crossval(3)):break
+for d,folds in pipeline(name=="cardio", shuffle, normalize("minmax"), crossval(n)):break
 
 for d,px,py in pipeline(name=="cardio", normalize("minmax")):break
 
@@ -41,16 +42,11 @@ px0=np.array([xx for xx,yy in zip(px,py) if yy==0])
 
 altitude_plot(funcs, px0, px, py, altitude=0, inc=inc, hist=True)
 
-plt.how()
-
-exit()
-
-altitude_plot(None, px,px,py, inc=inc)
-
-for i,(func,(x,tx,ty)) in enumerate(zip(funcs,folds)):
-    altitude_plot(func, x, tx, ty, altitude=altitude, inc=inc, hist=False)
+plt.savefig("imgs/showfolds.png", format="png")
+plt.savefig("imgs/showfolds.pdf", format="pdf")
 
 plt.how()
+
 
 
 

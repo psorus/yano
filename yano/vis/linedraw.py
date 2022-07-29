@@ -35,9 +35,17 @@ def draw(samples,truth,func,borders,minx,maxx,miny,maxy, hist=True):
 
     if hist:
 
-        hist0=np.histogram2d(sample0[:,0],sample0[:,1],bins=100,range=[[minx,maxx],[miny,maxy]])[0].T
-        hist1=np.histogram2d(sample1[:,0],sample1[:,1],bins=100,range=[[minx,maxx],[miny,maxy]])[0].T
-        hist=hist1-hist0
+        if len(sample0)>0 and len(sample1)>0:
+            hist0=np.histogram2d(sample0[:,0],sample0[:,1],bins=100,range=[[minx,maxx],[miny,maxy]])[0].T
+            hist1=np.histogram2d(sample1[:,0],sample1[:,1],bins=100,range=[[minx,maxx],[miny,maxy]])[0].T
+            hist=hist1-hist0
+        elif len(sample0)>0:
+            hist=np.histogram2d(sample0[:,0],sample0[:,1],bins=100,range=[[minx,maxx],[miny,maxy]])[0].T
+        elif len(sample1)>0:
+            hist=-np.histogram2d(sample1[:,0],sample1[:,1],bins=100,range=[[minx,maxx],[miny,maxy]])[0].T
+        else:
+            hist=np.zeros((100,100))
+
         plt.imshow(hist,extent=[minx,maxx,miny,maxy],origin='lower',cmap="hot")
         plt.grid(False)
 

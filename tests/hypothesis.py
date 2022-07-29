@@ -26,7 +26,10 @@ condition=condition & (number_of_samples<10000)#only use datasets with less than
 
 print(len(condition), "Datasets found")#How many datasets are left?
 
+for zw in condition:
+    print(zw)
 
+exit()
 #define hypothesis
 clf1=IForest(n_estimators=100)
 

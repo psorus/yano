@@ -27,6 +27,17 @@ class Logger(object):
         self.results=[]
         self.addfeat=addfeat
 
+    def add_algo(self, algo_name, algo_func, dic):
+        self.algos.append(algo_func)
+        self.algo_names.append(algo_name)
+        for i, ds in enumerate(self.datasets):
+            #assert ds.name() in dic.keys(), f"this algo is not complete. Missing {ds} got {dic.keys()}"
+            if ds.name() in dic.keys():
+                self.results[i].append(Stats(dic[ds.name()]))
+            else:
+                self.results[i].append(Stats(0.0))
+
+
     def add_run(self,dataset, results, verbose=None):
         if verbose is None:
             verbose = self.verbose

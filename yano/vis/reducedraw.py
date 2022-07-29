@@ -7,18 +7,24 @@ from .projector import learn_projection
 from .linedraw import draw
 
 def reducedraw(x,tx,ty,score,border,inc=0.0, hist=True):
-    proj=learn_projection(x,n_components=2)
+    if x.shape[1]>2:
+        proj=learn_projection(x,n_components=2)
 
-    q=proj.transform(x)
-    tq=proj.transform(tx)
+        q=proj.transform(x)
+        tq=proj.transform(tx)
+        def new_score(q, i=0):
+            x=proj.inverse_transform(q)
+            p=score[i](x)
+            return p
+    else:
+        q=x
+        tq=tx
+        def new_score(q, i=0):
+            return score[i](q)
 
     if not type(score) is list:
         score=[score]
 
-    def new_score(q, i=0):
-        x=proj.inverse_transform(q)
-        p=score[i](x)
-        return p
 
     nscores=[lambda q, i=i: new_score(q, i) for i in range(len(score))]
 
